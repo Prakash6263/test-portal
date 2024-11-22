@@ -8,21 +8,22 @@ require('dotenv').config();
 const cors = require('cors');
 const app = express();
 
-// Connect to MongoDB
-const allowedOrigins = ['http://localhost:3000', 'http://localhost:3001','https://aptitude-test-ojtq.onrender.com'];
-
+// CORS Middleware
+const allowedOrigins = ['http://localhost:3000', 'http://localhost:3001', 'https://aptitude-test-ojtq.onrender.com'];
 app.use(cors({
   origin: (origin, callback) => {
-    // Allow requests with no origin (like mobile apps or Postman)
-    if (!origin) return callback(null, true);
-
-    if (allowedOrigins.includes(origin)) {
-      callback(null, true); // Allow the request
+    console.log('Request Origin:', origin); // Debugging
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
     } else {
-      callback(new Error('Not allowed by CORS')); // Reject the request
+      console.error('CORS Error: Not allowed by CORS');
+      callback(new Error('Not allowed by CORS'));
     }
-  }
+  },
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
 }));
+
 connectDB();
 
 // Middleware to parse JSON and URL-encoded data
