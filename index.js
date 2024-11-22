@@ -9,7 +9,7 @@ const cors = require('cors');
 const app = express();
 
 // CORS Middleware
-const allowedOrigins = ['http://localhost:3000', 'http://localhost:3001', 'https://aptitude-test-ojtq.onrender.com'];
+const allowedOrigins = ['http://localhost:3000', 'http://localhost:3001', 'https://technorizon-solutions-examhub.vercel.app'];
 app.use(cors({
   origin: (origin, callback) => {
     console.log('Request Origin:', origin); // Debugging
