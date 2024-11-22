@@ -8,19 +8,23 @@ require('dotenv').config();
 const cors = require('cors');
 const app = express();
 
-// CORS Middleware
-const allowedOrigins = ['http://localhost:3000', 'http://localhost:3001', 'https://technorizon-solutions-examhub.vercel.app'];
+// Connect to MongoDB
+const allowedOrigins = process.env.NODE_ENV === 'production'
+  ? ['https://technorizon-solutions-examhub.vercel.app']
+  : ['http://localhost:3000', 'http://localhost:3001'];
+
 app.use(cors({
   origin: (origin, callback) => {
-    console.log('Request Origin:', origin); // Debugging
-    if (!origin || allowedOrigins.includes(origin)) {
+    if (!origin) return callback(null, true);
+
+    if (allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
-      console.error('CORS Error: Not allowed by CORS');
-      callback(new Error('Not allowed by CORS'));
+      callback(new Error(`Origin ${origin} is not allowed by CORS`));
     }
   },
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
 }));
 
