@@ -10,7 +10,7 @@ const app = express();
 
 // Connect to MongoDB
 const allowedOrigins = process.env.NODE_ENV === 'production'
-  ? ['https://technorizen-solutions-examhub.netlify.app',"https://admin-test-sigma.vercel.app"]
+  ? ['https://technorizen-solutions-examhub.netlify.app',"https://technorizen-solutions-admin.netlify.app"]
   : ['http://localhost:3000', 'http://localhost:3001'];
 
 app.use(cors({
